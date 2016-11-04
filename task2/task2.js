@@ -1,33 +1,45 @@
-    function extractCharacters(str) {
-      var res = str.split('');
-      return res.map(el => el.toLowerCase())
-                //make all elements to be in lowercase
-                .filter((el, i, res) => res.indexOf(el) == i);
-                //filter array for uniq values
-    }
-
+function extractCharacters(str) {
+    var res = str.split('');
+    return res.map(el => el.toLowerCase())
+            //make all elements to be in lowercase
+            .filter((el, i, res) => res.indexOf(el) == i);
+            //filter array for uniq values
+}
 
 //=============================================================================
 
 function objectToString(data,str) {
-
-for(var key in data) {
-  str += key;
-  str += ": ";
-  if(typeof data[key] === "object" && !(data[key] instanceof Array)) {
-    str += "{";
-    str = objectToString(data[key], str);
-    str += "}";
-  } else {
-    str += data[key];
+  for(var key in data) {
+    str += key;
+    str += ": ";
+    if(typeof data[key] === "object" && !(data[key] instanceof Array)) {
+      str += "{";
+      str = objectToString(data[key], str);
+      str += "}";
+    } else if(Array.isArray(data[key])) {
+      str += "[";
+      for(var j = 0; j < data[key].length; j++) {
+        if(typeof data[key][j] === 'object' && !(data[key][j] instanceof Array)) {
+          str += "{";
+          str = objectToString(data[key][j], str);
+          str += "}";
+        } else {
+          str += data[key][j];
+          str += ',';
+        }
+      }
+      str = str.split(0, str.length-1);
+      str += ']';
+    } else {
+      str += data[key];
+    }
+    str += ",";
   }
-  str += ",";
-}
-str = str.substring(0, str.length-1);
-return str;
+  str = str.substring(0, str.length-1);
+  return str;
 }
 
-function myLogger(prefix) {
+function createLogger(prefix) {
   var stringObject = '';
   if(!prefix) {
     throw new Error("enter logger info");
@@ -41,12 +53,11 @@ function myLogger(prefix) {
     res += prefix;
     res += ": ";
     for(var i = 0; i < arguments.length; i++) {
-      if(typeof arguments[i] === "object" && !(data[key] instanceof Array)) {
+      if(typeof arguments[i] === "object") {
         res += "Object {";
         res += objectToString(arguments[i], stringObject);
         res += "}";
-      } else if(Array.isArray(artguments[i]))
-       else {
+      } else {
         res += arguments[i];
       }
       res += " ";
@@ -56,7 +67,3 @@ function myLogger(prefix) {
     console.log(res);
   }
 }
-var log = myLogger("sadasdasd");
-// log({data: 3, dra}, function data() {return 2;}, {catch: ['data', 3]});
-log({data: 3, test: {inner: 1}}, [1,23,3]);
-log({top: 1, level1: {level2: {level3: 3}}, level1_1: {level2_1: 21}, level2_2: 22})
