@@ -9,7 +9,6 @@ function extractCharacters(str) {
 //=============================================================================
 
 function createLogger(prefix) {
-  var stringObject = '';
   if(!prefix) {
     throw new Error("enter logger info");
   }
@@ -24,14 +23,13 @@ function createLogger(prefix) {
     for(var i = 0; i < arguments.length; i++) {
       if(typeof arguments[i] === "object") {
         res += "Object {";
-        res += objectToString(arguments[i], stringObject);
+        res += objectToString(arguments[i]);
         res += "}";
       } else {
         res += arguments[i];
       }
       res += " ";
     }
-    res += stringObject;
     res = res.trim()
     console.log(res);
   }
@@ -39,6 +37,7 @@ function createLogger(prefix) {
 
 
 function objectToString(data,str) {
+  if(!str) { var str = ""; }
   for(var key in data) {
     str += key;
     str += ": ";
@@ -58,7 +57,7 @@ function objectToString(data,str) {
           str += ',';
         }
       }
-      str = str.split(0, str.length-1);
+      str = str.substring(0, str.length-1);
       str += ']';
     } else {
       str += data[key];
