@@ -8,6 +8,36 @@ function extractCharacters(str) {
 
 //=============================================================================
 
+function createLogger(prefix) {
+  var stringObject = '';
+  if(!prefix) {
+    throw new Error("enter logger info");
+  }
+  return function() {
+    if(arguments.length === 0) {
+      throw new Error("enter arguments to custom logger");
+    }
+    var res = new Date().toISOString();
+    res += " ";
+    res += prefix;
+    res += ": ";
+    for(var i = 0; i < arguments.length; i++) {
+      if(typeof arguments[i] === "object") {
+        res += "Object {";
+        res += objectToString(arguments[i], stringObject);
+        res += "}";
+      } else {
+        res += arguments[i];
+      }
+      res += " ";
+    }
+    res += stringObject;
+    res = res.trim()
+    console.log(res);
+  }
+}
+
+
 function objectToString(data,str) {
   for(var key in data) {
     str += key;
@@ -37,33 +67,4 @@ function objectToString(data,str) {
   }
   str = str.substring(0, str.length-1);
   return str;
-}
-
-function createLogger(prefix) {
-  var stringObject = '';
-  if(!prefix) {
-    throw new Error("enter logger info");
-  }
-  return function() {
-    if(arguments.length === 0) {
-      throw new Error("enter arguments to custom logger");
-    }
-    var res = new Date().toISOString();
-    res += " ";
-    res += prefix;
-    res += ": ";
-    for(var i = 0; i < arguments.length; i++) {
-      if(typeof arguments[i] === "object") {
-        res += "Object {";
-        res += objectToString(arguments[i], stringObject);
-        res += "}";
-      } else {
-        res += arguments[i];
-      }
-      res += " ";
-    }
-    res += stringObject;
-    res = res.trim()
-    console.log(res);
-  }
 }
