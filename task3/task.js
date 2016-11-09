@@ -1,11 +1,14 @@
 function compareObjects(obj1, obj2, key) {
-    obj1[key] > obj2[key] ? console.log(obj1[key]) : console.log(obj2[key]);
+   return (obj1[key] > obj2[key] ? obj1 : obj2).name;
 }
-
-var x = { sum: 22 };
-var z = new Object({sum :24 });
-compareObjects(x,z, 'sum');
-
+function Cat(age, legsNum, name) {
+  this.age = age;
+  this.legsNum = legsNum;
+  this.name = name;
+}
+var petya = {age: 22, height: 178, name: 'Petryk'};
+var murzik = new Cat(7, 4, 'Murlyk');
+compareObjects(petya,murzik, 'age');
 
 //=======================================
 
