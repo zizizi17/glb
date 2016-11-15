@@ -90,19 +90,16 @@ function loadPage(bookId) {
 			var similarBooksLoaded = 0;
 			var similarBooksAmount = author.books.lenght;
 
-            author.books.forEach(function(similarBookId) {
-				makeRequest('api/bestsellers/similar/' + similarBookId, 'GET')
-                    .then(function (response) {
-					    var p = document.getElementById('similar').appendChild('p').textContent = response;
-					    similarBooksLoaded += 1
-
-					    if(similarBooksLoaded === similarBooksAmount) {
-						    alert('Horray everything loaded');
-					    }
-				    })
-                    .catch(function() {
-                        document.getElementById('similar').textContent = 'Error. Please refresh your browser';
-                    })
+            Promise.all(author.books.map(function(similarBookId){
+                return makeRequest('api/bestsellers/similar/' + similarBookId, 'GET');
+            }))
+                .then(function(response){
+                    var p = document.getElementById('similar').appendChild('p').textContent = response;
+                    alert('Horray everything loaded');
+                })
+                .catch(function(err){
+                    document.getElementById('similar').textContent = 'Error. Please refresh your browser';
+                });
             })
         });
 }
