@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+    <style>
+		body, html {
+			padding: 0;
+			margin: 0;
+		}
+        .battle-field {
+            display: inline-block;
+            width: 240px;
+			padding: 10px;
+			background: #e43a15;
+        }
+        .battle-field div {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+			line-height: 60px;
+			text-align: center;
+            box-sizing: border-box;
+            border: 1px solid black;
+            background-color: #fff;
+            cursor: pointer;
+			font-size: 24px;
+			border-radius: 5px;
+			-webkit-box-shadow: inset 0px 0px 8px 4px rgba(153,153,153,0.83);
+			-moz-box-shadow: inset 0px 0px 8px 4px rgba(153,153,153,0.83);
+			box-shadow: inset 0px 0px 8px 4px rgba(153,153,153,0.83);
+        }
+    </style>
+	<body>
+		<div class="battle-field"></div>
+        <script type="text/javascript">
+			var puzzle = {
+				board:  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].sort(function() { return Math.random()-.5; }),
+				render: function() {
+					var table = document.querySelector('.battle-field');
+					table.innerHTML = '';
+					var container = document.createDocumentFragment();
+					for(var i = 0; i < this.board.length; i++) {
+						var el = document.createElement('div');
+						el.style.visibility = this.board[i] ? 'visibe' : 'hidden';
+						el.innerText = this.board[i];
+						el.onclick = this.move;
+						container.appendChild(el);
+					}
+					table.appendChild(container);
+				},
+				isSiblingZero: function(elIndex) {
+					var siblingsIndexes = [elIndex-1, elIndex+1, elIndex-4, elIndex+4];
+					var siblings = siblingsIndexes.map(function(i) {
+						return puzzle.board[i];
+					});
+					if(!puzzle.laysInOneRow(elIndex, elIndex-1)) siblings[0] = undefined;
+					if(!puzzle.laysInOneRow(elIndex, elIndex+1)) siblings[1] = undefined;
+					return siblingsIndexes[siblings.indexOf(0)];
+				},
+				laysInOneRow: function(i1, i2) {
+					return Math.floor(i1/4) == Math.floor(i2/4);
+				},
+				move: function(e) {
+					var resArr = puzzle.board.slice(0, puzzle.board.length-1);
+					var win = resArr.every(function(el, i) {
+						return el == i;
+					});
+					if(win) {
+						alert('victory');
+					}
+					var currElIndex = puzzle.board.indexOf(+e.target.innerText);
+					var isSiblings = puzzle.isSiblingZero(currElIndex);
+					if(isSiblings >= 0) {
+						var tmp = puzzle.board[currElIndex];
+						puzzle.board[currElIndex] = puzzle.board[isSiblings];
+						puzzle.board[isSiblings] = tmp;
+					}
+					puzzle.render();
+				},
+				init: function() {
+					this.render();
+				}
+			}
+			puzzle.init();
+        </script>
+    </body>
+</html>
