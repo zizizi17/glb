@@ -43,9 +43,9 @@
 					var container = document.createDocumentFragment();
 					for(var i = 0; i < this.board.length; i++) {
 						var el = document.createElement('div');
-						el.style.visibility = this.board[i] ? 'visibe' : 'hidden';
+						el.style.visibility = this.board[i] ? 'visible' : 'hidden';
 						el.innerText = this.board[i];
-						el.onclick = this.move;
+						el.addEventListener('click', this.move);
 						container.appendChild(el);
 					}
 					table.appendChild(container);
@@ -63,14 +63,7 @@
 					return Math.floor(i1/4) == Math.floor(i2/4);
 				},
 				move: function(e) {
-					var resArr = puzzle.board.slice(0, puzzle.board.length-1);
-					var win = resArr.every(function(el, i) {
-						return el == i;
-					});
-					if(win) {
-						alert('victory');
-					}
-					var currElIndex = puzzle.board.indexOf(+e.target.innerText);
+					var currElIndex = puzzle.board.indexOf(parseInt(e.target.innerText));
 					var isSiblings = puzzle.isSiblingZero(currElIndex);
 					if(isSiblings >= 0) {
 						var tmp = puzzle.board[currElIndex];
@@ -78,11 +71,18 @@
 						puzzle.board[isSiblings] = tmp;
 					}
 					puzzle.render();
+					var resArr = puzzle.board.slice(0, puzzle.board.length-1);
+					var win = resArr.every(function(el, i) {
+						return el == i+1;
+					});
+					if(win) {
+						console.log('victory');
+					}
 				},
 				init: function() {
 					this.render();
 				}
-			}
+			};
 			puzzle.init();
         </script>
     </body>

@@ -11,7 +11,24 @@ function take(qs) {
             return res;
         }
     } else if(qs instanceof Node) {
-        return qs.nodeType;
+        var nodeType = qs.nodeType;
+        switch(nodeType) {
+          case 1:
+            return 'ELEMENT_NODE'
+            break;
+          case 3:
+            return 'TEXT_NODE'
+            break;
+          case 8:
+            return 'COMMENT_NODE'
+            break;
+          case 9:
+            return 'DOCUMENT_NODE'
+            break;
+          case 11:
+            return 'DOCUMENT_FRAGMENT_NODE'
+            break;
+        }
     }
 }
 //============Task #1 =================
