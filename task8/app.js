@@ -19,6 +19,9 @@ app
                 .then(response => {
                     $scope.data = response.data;
                     var reqArr = response.data.films;
+                    reqArr = reqArr.map(el => {
+                        return el.replace('http', 'https');
+                    })
                     return SwapiService.getFilms(reqArr);
                 })
                 .then(response => {
