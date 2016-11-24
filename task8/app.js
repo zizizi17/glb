@@ -64,19 +64,3 @@ app
             getFilms: getFilms
         }
     }]);
-
-
-
-    //
-    //
-    //
-    // .then(response => {
-    //     data = response.data;
-    //     let requestArr = response.data.films.map(el => $http.get(el))
-    //     return $q.all(requestArr);
-    // })
-    // .then( response => {
-    //     data.films = response.map( el => el.data);
-    //     console.log(data);
-    //     return response;
-    // })
