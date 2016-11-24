@@ -76,6 +76,7 @@ main {
 .navbutton:hover {
     color: #fff;
     background-color: #000;
+    cursor: pointer;
 }
 .navbutton:focus {
     outline: none;
