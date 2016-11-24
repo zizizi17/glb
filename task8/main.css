@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@font-face {
+    font-family: 'Star Wars';
+    src: url(Starjedi.ttf);
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    background-image: url('pEeUsp1.jpg');
+    background-size: cover;
+    margin: 0;
+}
+main {
+    margin: 40px 70px;
+}
+.spinner-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .95);
+    z-index: 3;
+}
+.hero_container {
+    background-color: rgba(255,255,102, .7);
+    padding: 25px;
+    border: 1px solid rgba(255,255,0, .7);
+    box-sizing: border-box;
+}
+.hero_profile {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+.hero_navigation,
+.hero_info,
+.hero_films {
+    flex: 0 1 30%;
+    font-size: 20px;
+}
+.hero_info-data,
+.hero_episode {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+.page_title {
+    text-align: center;
+    font-family: 'Star Wars';
+    font-weight: 200;
+    font-size: 36px;
+}
+.hero_image-wrapper {
+    margin-bottom: 20px;
+}
+.hero_image {
+    width: 100%;
+    height: auto;
+}
+.navbuttons {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+.navbutton {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    width: 120px;
+    padding: 10px 12px;
+    border: 1px solid #000;
+    color: #000;
+    background-color: transparent;
+    transition: all .2s linear;
+}
+.navbutton:hover {
+    color: #fff;
+    background-color: #000;
+}
+.navbutton:focus {
+    outline: none;
+}
+.navbutton:first-of-type {
+    margin-right: 15px;
+}
+.text-capitalize {
+    text-transform: capitalize;;
+}
+.info-label {
+    font-size: 20px;
+    font-weight: bold;
+}
+.info-data {
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(0,4,0, .8)
+}
+.btn-disabled {
+    cursor: not-allowed;
+    opacity: .6;
+}
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+}
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(255,255,102, .7);
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}

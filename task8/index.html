@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Swapi</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body ng-app="App">
+        <main ng-controller="MainCtrl" ng-cloak ng-init="init(currentId)">
+            <div class="spinner-wrapper" ng-hide="isLoaded">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+            <div class="hero_container">
+                <h1 class="page_title">Star Wars Heroes</h1>
+                <div class="hero_profile">
+                    <div class="hero_navigation">
+                        <div class="hero_image-wrapper">
+                            <img src="darth_vader_vector_art_by_cwdigital-d667w4t.jpg" class="hero_image">
+                        </div>
+                        <div class="navbuttons">
+                            <button type="button" ng-disabled="currentHero === 1" ng-click="navBack()" class="navbutton" ng-class="{'btn-disabled': currentId == 1}">Previous Hero</button>
+                            <button type="button" ng-disabled="currentHero === maxCount" ng-click="navNext()" class="navbutton" ng-class="{'btn-disabled': currentId == maxCount}">Next Hero</button>
+                        </div>
+                    </div>
+                    <div class="hero_info" ng-cloak>
+                        <p class="hero_info-data">
+                            <span class="info-label">Name: </span>
+                            <span class="info-data">{{data.name}}</span>
+                        </p>
+                        <p class="hero_info-data">
+                            <span class="info-label">Height: </span>
+                            <span class="info-data">{{data.height | distance}}</span>
+                        </p>
+                        <p class="hero_info-data">
+                            <span class="info-label">Mass: </span>
+                            <span class="text-capitalize info-data">{{data.mass | mass}}</span>
+                        </p>
+                        <p class="hero_info-data">
+                            <span class="info-label">Hair Color: </span>
+                            <span class="text-capitalize info-data">{{data.hair_color}}</span>
+                        </p>
+                        <p class="hero_info-data">
+                            <span class="info-label">Skin Color: </span>
+                            <span class="text-capitalize info-data">{{data.skin_color}}</span>
+                        </p>
+                        <p class="hero_info-data">
+                            <span class="info-label">Eye Color: </span>
+                            <span class="text-capitalize info-data">{{data.eye_color}}</span>
+                        </p>
+                        <p class="hero_info-data">
+                            <span class="info-label">Birth Year: </span>
+                            <span class="info-data">{{data.birth_year}}</span>
+                        </p>
+                        <p class="hero_info-data">
+                            <span class="info-label">Gender: </span>
+                            <span class="text-capitalize info-data">{{data.gender}}</span>
+                        </p>
+                    </div>
+                    <div class="hero_films">
+                        <p class="hero_episode" ng-repeat="film in data.films">
+                            <span class="info-label">Episode {{film.episode_id}}:</span>
+                            <span class="info-data">{{film.title}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
