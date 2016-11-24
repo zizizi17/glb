@@ -19,6 +19,7 @@ app
                 .then(response => {
                     $scope.data = response.data;
                     var reqArr = response.data.films;
+                    //for github https request
                     reqArr = reqArr.map(el => {
                         return el.replace('http', 'https');
                     })
