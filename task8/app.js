@@ -48,7 +48,7 @@ app
     }])
     .factory('SwapiService', ['$http', '$q', function($http, $q) {
         function getHeroData(id) {
-            let url = 'http://swapi.co/api/' + id;
+            let url = 'https://swapi.co/api/' + id;
             return $http.get(url);
         }
         function getFilms(arr) {
@@ -56,7 +56,7 @@ app
             return $q.all(arr);
         }
         function init(id) {
-            return $http.get('http://swapi.co/api/people/')
+            return $http.get('https://swapi.co/api/people/')
         }
         return {
             init: init,
