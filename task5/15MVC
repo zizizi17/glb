@@ -1,0 +1,103 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+    <style>
+		body, html {
+			padding: 0;
+			margin: 0;
+		}
+        .battle-field {
+            display: inline-block;
+            width: 240px;
+			padding: 10px;
+			background: #e43a15;
+        }
+        .battle-field div {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+			line-height: 60px;
+			text-align: center;
+            box-sizing: border-box;
+            border: 1px solid black;
+            background-color: #fff;
+            cursor: pointer;
+			font-size: 24px;
+			border-radius: 5px;
+			-webkit-box-shadow: inset 0px 0px 8px 4px rgba(153,153,153,0.83);
+			-moz-box-shadow: inset 0px 0px 8px 4px rgba(153,153,153,0.83);
+			box-shadow: inset 0px 0px 8px 4px rgba(153,153,153,0.83);
+        }
+    </style>
+	<body>
+		<div class="battle-field"></div>
+        <script type="text/javascript">
+            var View = {
+              render: function(Model) {
+                var table = document.querySelector('.battle-field');
+                table.innerHTML = '';
+                var container = document.createDocumentFragment();
+                for(var i = 0; i < Model.board.length; i++) {
+                  var el = document.createElement('div');
+                  el.style.visibility = Model.board[i] ? 'visible' : 'hidden';
+                  el.innerText = Model.board[i];
+                  container.appendChild(el);
+                }
+                table.appendChild(container);
+                table.addEventListener('click', Controller.move);
+              }
+            };
+            var Controller = {
+              isSiblingZero: function(elIndex) {
+                var siblingsIndexes = [elIndex-1, elIndex+1, elIndex-4, elIndex+4];
+                var siblings = siblingsIndexes.map(function(i) {
+                  return Model.board[i];
+                });
+                if(!Controller.laysInOneRow(elIndex, elIndex-1)) siblings[0] = undefined;
+                if(!Controller.laysInOneRow(elIndex, elIndex+1)) siblings[1] = undefined;
+                return siblingsIndexes[siblings.indexOf(0)];
+              },
+              laysInOneRow: function(i1, i2) {
+                return Math.floor(i1/4) == Math.floor(i2/4);
+              },
+              move: function(e) {
+                var currElIndex = Model.board.indexOf(parseInt(e.target.innerText));
+                var isSiblings = Controller.isSiblingZero(currElIndex);
+                if(isSiblings >= 0) {
+                  var tmp = Model.board[currElIndex];
+                  Model.board[currElIndex] = Model.board[isSiblings];
+                  Model.board[isSiblings] = tmp;
+                }
+                View.render(Model);
+                var resArr = Model.board.slice(0, Model.board.length-1);
+                var win = resArr.every(function(el, i) {
+                  return el == i+1;
+                });
+                if(Storage) {
+                  localStorage.setItem('board', JSON.stringify(Model.board));
+                }
+                if(win) {
+                  console.log('victory');
+                }
+              },
+              init: function() {
+                Model.getBoard();
+                View.render(Model);
+              }
+            };
+            var Model = {
+              getBoard: function() {
+                if(localStorage.length) {
+                  Model.board = JSON.parse(localStorage.getItem('board'));
+                } else {
+                  Model.board = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].sort(function() { return Math.random()-.5; });
+                }
+              }
+            };
+            window.onload = Controller.init;
+        </script>
+    </body>
+</html>
